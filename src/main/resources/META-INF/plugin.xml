@@ -1,0 +1,28 @@
+<idea-plugin version="2">
+    <id>org.jetbrains.sbt-idea-example</id>
+    <name>Grafter IntelliJ Plugin</name>
+    <version>1.0.0</version>
+
+    <description>Provides syntax support for the Grafter library</description>
+
+    <idea-version since-build="143.0"/>
+
+    <depends>org.intellij.scala</depends>
+
+    <application-components>
+        <!-- TODO put your components here -->
+    </application-components>
+
+    <project-components>
+        <!-- TODO put your components here -->
+    </project-components>
+
+    <extensions defaultExtensionNs="org.intellij.scala">
+        <syntheticMemberInjector implementation="org.sth.grafter.injector.Injector"/>
+    </extensions>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- TODO put your extensions here -->
+    </extensions>
+
+</idea-plugin>
