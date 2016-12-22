@@ -18,7 +18,7 @@
     </project-components>
 
     <extensions defaultExtensionNs="org.intellij.scala">
-        <syntheticMemberInjector implementation="org.sth.grafter.injector.Injector"/>
+        <syntheticMemberInjector implementation="org.sth.grafter.injector.ReaderInjector"/>
     </extensions>
 
     <extensions defaultExtensionNs="com.intellij">

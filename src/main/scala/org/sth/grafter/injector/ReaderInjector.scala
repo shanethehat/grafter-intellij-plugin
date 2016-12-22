@@ -5,7 +5,7 @@ import org.jetbrains.plugins.scala.lang.psi.api.toplevel.typedef.ScTypeDefinitio
 import org.jetbrains.plugins.scala.lang.psi.impl.toplevel.typedef.SyntheticMembersInjector
 import org.jetbrains.plugins.scala.lang.psi.types.result.TypingContext
 
-class Injector extends SyntheticMembersInjector {
+class ReaderInjector extends SyntheticMembersInjector {
   override def injectFunctions(source: ScTypeDefinition): Seq[String] = {
     source.members.flatMap {
       case v: ScValue if v.hasAnnotation("example.JavaGetter").isDefined =>
