@@ -1,5 +1,5 @@
 <idea-plugin version="2">
-    <id>org.jetbrains.sbt-idea-example</id>
+    <id>org.sth.grafter-intellij-plugin</id>
     <name>Grafter IntelliJ Plugin</name>
     <version>1.0.0</version>
 

@@ -1,6 +1,8 @@
 onLoad in Global := ((s: State) => { "updateIdea" :: s}) compose (onLoad in Global).value
 
-lazy val sbtIdeaExample: Project =
+libraryDependencies += "org.zalando" %% "grafter" % "1.3.0"
+
+lazy val grafterIntellijPlugin: Project =
   Project("grafter-intellij-plugin", file("."))
     .enablePlugins(SbtIdeaPlugin)
     .settings(
@@ -16,27 +18,27 @@ lazy val sbtIdeaExample: Project =
     )
 
 lazy val ideaRunner: Project = project.in(file("ideaRunner"))
-  .dependsOn(sbtIdeaExample % Provided)
+  .dependsOn(grafterIntellijPlugin % Provided)
   .settings(
     name := "ideaRunner",
     version := "1.0",
     scalaVersion := "2.11.8",
     autoScalaLibrary := false,
-    unmanagedJars in Compile <<= ideaMainJars.in(sbtIdeaExample),
+    unmanagedJars in Compile <<= ideaMainJars.in(grafterIntellijPlugin),
     unmanagedJars in Compile += file(System.getProperty("java.home")).getParentFile / "lib" / "tools.jar"
   )
 
 lazy val packagePlugin = TaskKey[File]("package-plugin", "Create plugin's zip file ready to load into IDEA")
 
-packagePlugin in sbtIdeaExample <<= (assembly in sbtIdeaExample,
-  target in sbtIdeaExample,
+packagePlugin in grafterIntellijPlugin <<= (assembly in grafterIntellijPlugin,
+  target in grafterIntellijPlugin,
   ivyPaths) map { (ideaJar, target, paths) =>
   val pluginName = "grafter-intellij-plugin"
   val ivyLocal = paths.ivyHome.getOrElse(file(System.getProperty("user.home")) / ".ivy2") / "local"
   val sources = Seq(
     ideaJar -> s"$pluginName/lib/${ideaJar.getName}"
   )
-  val out = target / s"$pluginName-plugin.zip"
+  val out = target / s"$pluginName.zip"
   IO.zip(sources, out)
   out
 }
