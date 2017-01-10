@@ -9,8 +9,6 @@ import org.jetbrains.plugins.scala.lang.psi.impl.toplevel.typedef.SyntheticMembe
 
 class ReaderInjector extends SyntheticMembersInjector {
 
-  lazy val logger = Logger.getInstance(this.getClass)
-
   val readerAnnotation = "org.zalando.grafter.macros.reader"
 
   override def injectFunctions(source: ScTypeDefinition): Seq[String] = {

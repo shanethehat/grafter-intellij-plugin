@@ -1,6 +1,7 @@
 <idea-plugin version="2">
-    <id>org.sth.grafter-intellij-plugin</id>
-    <name>Grafter IntelliJ Plugin</name>
+    <id>org.sth.grafter-macro-support</id>
+    <name>Grafter Macro Support</name>
+    <vendor>Shane Auckland</vendor>
     <version>1.0.0</version>
 
     <description>Provides syntax support for the Grafter library</description>

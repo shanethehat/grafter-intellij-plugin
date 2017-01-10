@@ -1,12 +1,13 @@
 onLoad in Global := ((s: State) => { "updateIdea" :: s}) compose (onLoad in Global).value
 
 libraryDependencies += "org.zalando" %% "grafter" % "1.3.0"
+addCompilerPlugin("org.scalamacros" % "paradise" % "2.1.0" cross CrossVersion.full)
 
-lazy val grafterIntellijPlugin: Project =
-  Project("grafter-intellij-plugin", file("."))
+lazy val grafterMacroSupport: Project =
+  Project("grafter-macro-support", file("."))
     .enablePlugins(SbtIdeaPlugin)
     .settings(
-      name := "grafter-intellij-plugin",
+      name := "Grafter Macro Support",
       version := "1.0.0",
       scalaVersion := "2.11.8",
       assemblyOption in assembly := (assemblyOption in assembly).value.copy(includeScala = false),
@@ -18,22 +19,22 @@ lazy val grafterIntellijPlugin: Project =
     )
 
 lazy val ideaRunner: Project = project.in(file("ideaRunner"))
-  .dependsOn(grafterIntellijPlugin % Provided)
+  .dependsOn(grafterMacroSupport % Provided)
   .settings(
     name := "ideaRunner",
     version := "1.0",
     scalaVersion := "2.11.8",
     autoScalaLibrary := false,
-    unmanagedJars in Compile <<= ideaMainJars.in(grafterIntellijPlugin),
+    unmanagedJars in Compile <<= ideaMainJars.in(grafterMacroSupport),
     unmanagedJars in Compile += file(System.getProperty("java.home")).getParentFile / "lib" / "tools.jar"
   )
 
 lazy val packagePlugin = TaskKey[File]("package-plugin", "Create plugin's zip file ready to load into IDEA")
 
-packagePlugin in grafterIntellijPlugin <<= (assembly in grafterIntellijPlugin,
-  target in grafterIntellijPlugin,
+packagePlugin in grafterMacroSupport <<= (assembly in grafterMacroSupport,
+  target in grafterMacroSupport,
   ivyPaths) map { (ideaJar, target, paths) =>
-  val pluginName = "grafter-intellij-plugin"
+  val pluginName = "grafter-macro-support"
   val ivyLocal = paths.ivyHome.getOrElse(file(System.getProperty("user.home")) / ".ivy2") / "local"
   val sources = Seq(
     ideaJar -> s"$pluginName/lib/${ideaJar.getName}"
